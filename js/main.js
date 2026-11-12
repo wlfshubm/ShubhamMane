@@ -45,7 +45,6 @@ function tgl(o){document.body.classList.toggle('lock',o);['main','footer'].forEa
 mb.addEventListener('click',function(){tgl(!dr.classList.contains('open'))});
 sc.addEventListener('click',function(){tgl(false)});
 dr.addEventListener('click',function(e){if(e.target.closest('a'))tgl(false)});
-matchMedia('(min-width:901px)').addEventListener('change',function(m){if(m.matches)tgl(false)});
 addEventListener('keydown',function(e){if(e.key==='Escape'&&dr.classList.contains('open')){tgl(false);mb.focus()}});
 window.addEventListener('hashchange',route);route();
 $('#tg').addEventListener('click',function(){

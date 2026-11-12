@@ -110,8 +110,7 @@ header.top .topnav{display:none;margin-left:auto;margin-right:1rem;gap:.4rem;ali
 header.top .topnav a{padding:.45rem 1rem;border-radius:999px;border:1.5px solid transparent;font-size:1rem;text-decoration:none;transition:background .2s,color .2s,border-color .2s}
 header.top .topnav a:hover{border-color:var(--ink);color:var(--ink)}
 header.top .topnav a[aria-current="page"]{background:var(--ink);color:var(--bg);text-decoration:none}
-@media (min-width:901px){.menu{display:none}header.top .topnav{display:flex}.drawer,.scrim{display:none}}
-@media (max-width:900px){header.top{padding-left:3.6rem}}
+@media (max-width:1160px){header.top{padding-left:3.6rem}}
 body.lock{overflow:hidden}
 .hero::after{content:"";position:absolute;right:0;top:15%;width:clamp(120px,22vw,260px);aspect-ratio:1;border-radius:50%;background:var(--accent);opacity:.18;z-index:-1;animation:float 7s ease-in-out infinite}
 .hero h1 span{animation:rise .9s cubic-bezier(.2,.7,.2,1) both}
