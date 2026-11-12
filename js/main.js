@@ -1,10 +1,12 @@
 var P=[
-{id:'project-one',t:'Project One',y:2026,c:'Product design',s:'Redesign of a booking app, from research to launch.',role:'Lead designer',time:'4 months',tools:'Figma, React',body:['Customers abandoned the old booking flow at the payment step. I interviewed twenty users, mapped where they got stuck and cut the flow from seven screens to three.','The new design shipped in three cities first, then went nationwide after the numbers held.'],res:['+32% completed bookings','4.8 store rating','3 cities at launch']},
-{id:'project-two',t:'Project Two',y:2025,c:'Web app',s:'A dashboard that turns raw sales data into daily decisions.',role:'Designer and developer',time:'3 months',tools:'React, D3',body:['The sales team lived in spreadsheets. I built a dashboard that shows today’s priorities first and lets people drill into the numbers only when they need to.','Charts load in under a second, even on slow office networks.'],res:['−60% report time','200 daily users','Under 1s load']},
-{id:'project-three',t:'Project Three',y:2025,c:'Branding',s:'Brand identity and website for a neighbourhood café.',role:'Brand designer',time:'6 weeks',tools:'Illustrator, HTML',body:['The café wanted to feel warm but modern. I designed a hand-drawn logo, a small color palette and a one-page site with the menu and opening hours up front.'],res:['Logo and guide','1-page site','Menu print kit']},
-{id:'project-four',t:'Project Four',y:2024,c:'Open source',s:'An open-source tool for planning team schedules.',role:'Maintainer',time:'Ongoing',tools:'TypeScript, Node',body:['A small tool that finds meeting times across time zones. It started as a weekend project and now has contributors from several countries.'],res:['900 stars','25 contributors','MIT licence']}];
+{id:'project-one',icon:'img/projects/project-one/icon.svg',banner:'img/projects/project-one/banner.svg',t:'Project One',y:2026,c:'Product design',s:'Redesign of a booking app, from research to launch.',role:'Lead designer',time:'4 months',tools:'Figma, React',body:['Customers abandoned the old booking flow at the payment step. I interviewed twenty users, mapped where they got stuck and cut the flow from seven screens to three.','The new design shipped in three cities first, then went nationwide after the numbers held.'],res:['+32% completed bookings','4.8 store rating','3 cities at launch']},
+{id:'project-two',icon:'img/projects/project-two/icon.svg',banner:'img/projects/project-two/banner.svg',t:'Project Two',y:2025,c:'Web app',s:'A dashboard that turns raw sales data into daily decisions.',role:'Designer and developer',time:'3 months',tools:'React, D3',body:['The sales team lived in spreadsheets. I built a dashboard that shows today’s priorities first and lets people drill into the numbers only when they need to.','Charts load in under a second, even on slow office networks.'],res:['−60% report time','200 daily users','Under 1s load']},
+{id:'project-three',icon:'img/projects/project-three/icon.svg',banner:'img/projects/project-three/banner.svg',t:'Project Three',y:2025,c:'Branding',s:'Brand identity and website for a neighbourhood café.',role:'Brand designer',time:'6 weeks',tools:'Illustrator, HTML',body:['The café wanted to feel warm but modern. I designed a hand-drawn logo, a small color palette and a one-page site with the menu and opening hours up front.'],res:['Logo and guide','1-page site','Menu print kit']},
+{id:'project-four',icon:'img/projects/project-four/icon.svg',banner:'img/projects/project-four/banner.svg',t:'Project Four',y:2024,c:'Open source',s:'An open-source tool for planning team schedules.',role:'Maintainer',time:'Ongoing',tools:'TypeScript, Node',body:['A small tool that finds meeting times across time zones. It started as a weekend project and now has contributors from several countries.'],res:['900 stars','25 contributors','MIT licence']}];
 var $=function(s){return document.querySelector(s)};
-function row(p){var i=P.indexOf(p);return '<li><a class="pcard" href="#'+p.id+'"><div class="pc-cover" style="--a:'+(120+i*55)+'deg"><span>'+p.y+'</span><em>'+p.c+'</em></div><div class="pc-body"><h3>'+p.t+'</h3><p>'+p.s+'</p><span class="arr">View project →</span></div></a></li>'}
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function icon(p,cls){return p.icon?'<img class="'+cls+'" src="'+esc(p.icon)+'" alt="" width="96" height="96" loading="lazy" onerror="this.remove()">':'<span class="'+cls+' ph" aria-hidden="true">'+esc(p.t.charAt(0))+'</span>'}
+function row(p){var i=P.indexOf(p);return '<li><a class="pcard" href="#'+p.id+'"><div class="pc-cover" style="--a:'+(120+i*55)+'deg">'+(p.banner?'<img class="pc-img" src="'+esc(p.banner)+'" alt="" loading="lazy" onerror="this.remove()">':'')+icon(p,'pc-icon')+'<span>'+p.y+'</span><em>'+p.c+'</em></div><div class="pc-body"><h3>'+p.t+'</h3><p>'+p.s+'</p><span class="arr">View project →</span></div></a></li>'}
 function fillList(el,arr){el.innerHTML=arr.map(row).join('')}
 var cats=['All'].concat(P.map(function(p){return p.c}).filter(function(c,i,a){return a.indexOf(c)===i}));
 var cur='All';
@@ -15,7 +17,7 @@ function drawWork(){
 $('#filters').addEventListener('click',function(e){var b=e.target.closest('.chip');if(b){cur=b.dataset.c;drawWork();anim()}});
 drawWork();
 function project(i){var p=P[i],pr=P[(i+P.length-1)%P.length],nx=P[(i+1)%P.length];
- $('#project').innerHTML='<div class="pagehead"><p><a href="#work">← All work</a></p><small class="eyebrow">Case study · '+p.c+'</small><h1>'+p.t+'</h1><p>'+p.s+'</p></div><div class="cover" role="img" aria-label="Cover image placeholder for '+p.t+'">'+p.t+'</div><dl class="meta"><div><dt>Year</dt><dd>'+p.y+'</dd></div><div><dt>Role</dt><dd>'+p.role+'</dd></div><div><dt>Timeline</dt><dd>'+p.time+'</dd></div><div><dt>Tools</dt><dd>'+p.tools+'</dd></div></dl><div class="prose">'+p.body.map(function(t){return '<p>'+t+'</p>'}).join('')+'</div><h2>Results</h2><ul class="res">'+p.res.map(function(r){return '<li>'+r+'</li>'}).join('')+'</ul><div class="pn"><a href="#'+pr.id+'">← '+pr.t+'</a><a href="#'+nx.id+'">'+nx.t+' →</a></div>'}
+ $('#project').innerHTML='<div class="pagehead"><p><a href="#work">← All work</a></p><small class="eyebrow">Case study · '+p.c+'</small><div class="ph-title">'+icon(p,'p-icon')+'<h1>'+p.t+'</h1></div><p>'+p.s+'</p></div>'+(p.banner?'<img class="banner" src="'+esc(p.banner)+'" alt="Banner for '+esc(p.t)+'" width="1600" height="800">':'<div class="cover" role="img" aria-label="Cover image placeholder for '+esc(p.t)+'">'+p.t+'</div>')+'<dl class="meta"><div><dt>Year</dt><dd>'+p.y+'</dd></div><div><dt>Role</dt><dd>'+p.role+'</dd></div><div><dt>Timeline</dt><dd>'+p.time+'</dd></div><div><dt>Tools</dt><dd>'+p.tools+'</dd></div></dl><div class="prose">'+p.body.map(function(t){return '<p>'+t+'</p>'}).join('')+'</div><h2>Results</h2><ul class="res">'+p.res.map(function(r){return '<li>'+r+'</li>'}).join('')+'</ul><div class="pn"><a href="#'+pr.id+'">← '+pr.t+'</a><a href="#'+nx.id+'">'+nx.t+' →</a></div>'}
 function route(){
  var h=location.hash.slice(1)||'home',v=h,idx=P.map(function(p){return p.id}).indexOf(h),title='';
  if(idx>-1){v='project';project(idx);title=P[idx].t}
@@ -50,9 +52,16 @@ $('#tg').addEventListener('click',function(){
  r.dataset.theme=n;this.setAttribute('aria-label',n==='light'?'Switch to dark theme':'Switch to light theme');try{localStorage.setItem('theme',n)}catch(e){}});
 try{var t=localStorage.getItem('theme');if(t){document.documentElement.dataset.theme=t;if(t==='light')$('#tg').setAttribute('aria-label','Switch to dark theme')}}catch(e){}
 $('#cf').addEventListener('submit',function(e){e.preventDefault();
- var b='Name: '+$('#f-name').value+'\nEmail: '+$('#f-email').value+'\nType: '+$('#f-type').value+'\n\n'+$('#f-msg').value;
- location.href='mailto:Shivammane666@gmail.com?subject='+encodeURIComponent('Project enquiry: '+$('#f-type').value)+'&body='+encodeURIComponent(b);
- $('#st').textContent='Opening your email app to send the message.'});
+ var f=this,btn=f.querySelector('button[type="submit"]'),st=$('#st');
+ var data={name:$('#f-name').value.trim(),email:$('#f-email').value.trim(),type:$('#f-type').value,message:$('#f-msg').value.trim(),website:$('#f-hp').value};
+ btn.disabled=true;st.textContent='Sending…';
+ fetch('/api/contact',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)})
+ .then(function(r){return r.json().catch(function(){return{}}).then(function(j){return{ok:r.ok,j:j}})})
+ .then(function(x){
+  if(x.ok){f.reset();st.textContent='Thank you! Your message has been sent. I reply within two working days.'}
+  else{st.textContent=(x.j&&x.j.error)||'Something went wrong. Please email me directly.'}})
+ .catch(function(){st.textContent='Could not reach the server. Please email Shivammane666@gmail.com directly.'})
+ .then(function(){btn.disabled=false})});
 
 (function(){
 var hero=$('#hero'),RMo=matchMedia('(prefers-reduced-motion: reduce)').matches;

@@ -4,6 +4,10 @@
   "private": true,
   "scripts": {
     "start": "npx --yes serve . -l 3000",
+    "dev": "npx --yes vercel dev",
     "deploy": "npx --yes vercel --prod"
+  },
+  "dependencies": {
+    "nodemailer": "^6.9.16"
   }
 }

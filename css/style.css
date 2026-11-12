@@ -259,3 +259,17 @@ input:hover,select:hover,textarea:hover{border-color:var(--muted)}
 .live.on .ld{background:#4ade80;animation:pulse 2s infinite}
 .live.on small{color:#4ade80}
 @media (max-width:860px){.hx-top{grid-template-columns:1fr}.portrait{justify-self:start;max-width:260px;order:-1}.hx .cta{margin-bottom:.5rem}}
+
+/* ---- project icons + banners ---- */
+.pc-cover{position:relative;isolation:isolate}
+.pc-cover .pc-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2}
+.pc-cover::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(to top,rgba(0,0,0,.62),rgba(0,0,0,0) 60%)}
+.pc-icon{position:absolute;top:1rem;left:1rem;width:3rem;height:3rem;border-radius:.85rem;object-fit:cover;box-shadow:0 4px 14px rgba(0,0,0,.45)}
+.ph{display:grid;place-content:center;background:#1c1c1c;color:#EDEDED;font-family:var(--display);font-weight:800;font-size:1.4rem;border:1.5px solid rgba(255,255,255,.2)}
+.ph-title{display:flex;align-items:center;gap:1rem;flex-wrap:wrap}
+.ph-title h1{margin:0}
+.p-icon{width:clamp(3.2rem,8vw,4.6rem);height:clamp(3.2rem,8vw,4.6rem);border-radius:1.1rem;object-fit:cover;flex:none;border:1.5px solid var(--line)}
+.p-icon.ph{font-size:2rem}
+.banner{display:block;width:100%;height:auto;aspect-ratio:16/8;object-fit:cover;border-radius:12px;margin-bottom:2rem;border:1.5px solid var(--line)}
+/* ---- contact form honeypot ---- */
+.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
