@@ -84,8 +84,8 @@ document.addEventListener('pointerout',function(e){var el=e.target.closest&&e.ta
 
 /* ---- Portrait tilt + live VS Code status (via Discord Rich Presence + Lanyard) ---- */
 (function(){
-var LIVE_DISCORD_ID='';   // <- paste your Discord user ID here
-var SHOW_FILE=true;       // false = show only project name, hide file names
+var LIVE_DISCORD_ID='811984561629167686';   // <- paste your Discord user ID here
+var SHOW_FILE=false;       // false = show only project name, hide file names
 var p=$('#portrait');
 if(p&&!RM){var im=p.querySelector('img');
  p.addEventListener('pointermove',function(e){var r=p.getBoundingClientRect();im.style.setProperty('--ry',((e.clientX-r.left)/r.width-.5)*10+'deg');im.style.setProperty('--rx',-((e.clientY-r.top)/r.height-.5)*10+'deg')});
