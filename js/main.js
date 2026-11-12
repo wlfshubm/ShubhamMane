@@ -81,3 +81,36 @@ document.addEventListener('pointermove',function(e){var el=e.target.closest&&e.t
 document.addEventListener('pointerout',function(e){var el=e.target.closest&&e.target.closest(SP);if(!el||el.contains(e.relatedTarget))return;
  ['--mx','--my','--rx','--ry'].forEach(function(k){el.style.removeProperty(k)})});
 })();
+
+/* ---- Portrait tilt + live VS Code status (via Discord Rich Presence + Lanyard) ---- */
+(function(){
+var LIVE_DISCORD_ID='';   // <- paste your Discord user ID here
+var SHOW_FILE=true;       // false = show only project name, hide file names
+var p=$('#portrait');
+if(p&&!RM){var im=p.querySelector('img');
+ p.addEventListener('pointermove',function(e){var r=p.getBoundingClientRect();im.style.setProperty('--ry',((e.clientX-r.left)/r.width-.5)*10+'deg');im.style.setProperty('--rx',-((e.clientY-r.top)/r.height-.5)*10+'deg')});
+ p.addEventListener('pointerleave',function(){im.style.removeProperty('--rx');im.style.removeProperty('--ry')})}
+var demo=/livedemo/.test(location.search),box=$('#live');
+if(!box||(!LIVE_DISCORD_ID&&!demo))return;
+box.hidden=false;
+var k=$('#live-k'),t=$('#live-t'),s=$('#live-s'),cur=null,ws,hb,retry=0;
+function ago(ms){var m=Math.floor(ms/6e4);return m<1?'just started':m<60?m+'m':Math.floor(m/60)+'h '+(m%60)+'m'}
+function render(){
+ if(!cur){box.classList.remove('on');k.textContent='Offline';t.textContent='';s.textContent='Not coding right now';return}
+ var proj=(cur.state||'').replace(/^(workspace|working on|project)\s*[:\-]?\s*/i,'')||'a new project';
+ box.classList.add('on');k.textContent='Live · VS Code';t.textContent=proj;
+ var bits=[];if(SHOW_FILE&&cur.details)bits.push(cur.details);
+ if(cur.timestamps&&cur.timestamps.start)bits.push(ago(Date.now()-cur.timestamps.start));
+ s.textContent=bits.join(' · ')}
+function handle(d){var a=(d&&d.activities||[]).filter(function(x){return /visual studio code|vscodium|^code$|cursor/i.test(x.name||'')})[0];cur=a||null;render()}
+render();setInterval(render,30000);
+if(demo){cur={name:'Visual Studio Code',details:'Editing main.js',state:'Workspace: new-project',timestamps:{start:Date.now()-14*6e4}};render();return}
+fetch('https://api.lanyard.rest/v1/users/'+LIVE_DISCORD_ID).then(function(r){return r.json()}).then(function(j){if(j&&j.success)handle(j.data)}).catch(function(){});
+function connect(){try{ws=new WebSocket('wss://api.lanyard.rest/socket')}catch(e){return}
+ ws.onopen=function(){retry=0};
+ ws.onmessage=function(m){var d=JSON.parse(m.data);
+  if(d.op===1){ws.send(JSON.stringify({op:2,d:{subscribe_to_id:LIVE_DISCORD_ID}}));clearInterval(hb);hb=setInterval(function(){if(ws.readyState===1)ws.send(JSON.stringify({op:3}))},d.d.heartbeat_interval)}
+  else if(d.op===0&&d.d)handle(d.d)};
+ ws.onclose=function(){clearInterval(hb);setTimeout(connect,Math.min(3e4,2e3*(++retry)))}}
+connect();
+})();

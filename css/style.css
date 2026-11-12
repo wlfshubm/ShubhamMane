@@ -240,3 +240,22 @@ body::after{left:-26vmax;bottom:-26vmax;animation:drift 26s ease-in-out infinite
 input:hover,select:hover,textarea:hover{border-color:var(--muted)}
 
 @media (max-width:760px){.pgrid,.svc,.cx,.pn{grid-template-columns:1fr}.pn a:last-child{text-align:left}.cx{gap:2rem}}
+
+/* ---- Portrait + live VS Code card ---- */
+.hx-top{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,.75fr);gap:clamp(1.5rem,5vw,4rem);align-items:center;width:100%;margin-bottom:2.5rem}
+.hx-text{display:flex;flex-direction:column;align-items:flex-start}
+.hx h1{font-size:clamp(3rem,9.5vw,7rem)}
+.hx .cta{margin-bottom:0}
+@keyframes floatS{50%{transform:translateY(-14px)}}
+.portrait{position:relative;margin:0;justify-self:end;width:100%;max-width:380px;animation:vin 1s .3s both}
+.portrait .ring{position:absolute;inset:7% -7% -7% 7%;border-radius:30px;background:linear-gradient(135deg,var(--accent),transparent 70%);opacity:.4;animation:floatS 7s ease-in-out infinite}
+.portrait img{position:relative;z-index:1;display:block;width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;object-position:50% 25%;border-radius:28px;border:1.5px solid var(--line);transform:perspective(900px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));transition:transform .25s ease-out}
+.live{position:absolute;z-index:2;left:.9rem;right:.9rem;bottom:.9rem;display:flex;align-items:center;gap:.8rem;padding:.7rem .95rem;border-radius:16px;border:1.5px solid var(--line);background:color-mix(in srgb,var(--bg) 72%,transparent);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);font-family:var(--display);line-height:1.25}
+.live small{display:block;font-size:.7rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.live b{display:block;font-size:1.05rem}
+.live b:empty{display:none}
+.live span#live-s{display:block;font-size:.85rem;color:var(--muted)}
+.ld{flex:none;width:.7rem;height:.7rem;border-radius:50%;background:var(--muted);box-shadow:0 0 0 0 #4ade80}
+.live.on .ld{background:#4ade80;animation:pulse 2s infinite}
+.live.on small{color:#4ade80}
+@media (max-width:860px){.hx-top{grid-template-columns:1fr}.portrait{justify-self:start;max-width:260px;order:-1}.hx .cta{margin-bottom:.5rem}}
